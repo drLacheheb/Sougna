@@ -3,7 +3,7 @@ package com.example.sougna.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sougna.model.Product
-import com.example.sougna.registry.ProductRegistry
+import com.example.sougna.repository.ProductRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,7 +54,7 @@ class ProductViewModel() : ViewModel() {
                 // Simulate network delay
                 delay(2000)
                 _uiState.value = _uiState.value.copy(
-                    products = ProductRegistry.generateMockProducts(),
+                    products = ProductRepository.generateMockProducts(),
                     isLoading = false
                 )
             } catch (e: Exception) {

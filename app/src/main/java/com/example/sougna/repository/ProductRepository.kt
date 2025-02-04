@@ -1,11 +1,11 @@
-package com.example.sougna.registry
+package com.example.sougna.repository
 
 import com.example.sougna.model.Product
 
 /**
  * Registry containing mock products for demonstration purposes.
  */
-object ProductRegistry {
+object ProductRepository {
     /**
      * Generates a list of mock products.
      *

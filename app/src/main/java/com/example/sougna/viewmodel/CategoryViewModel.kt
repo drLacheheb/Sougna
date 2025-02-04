@@ -2,8 +2,8 @@ package com.example.sougna.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sougna.registry.CategoryRegistry
 import com.example.sougna.model.Category
+import com.example.sougna.repository.CategoryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,7 +45,7 @@ class CategoryViewModel : ViewModel() {
     private fun fetchCategories() {
         viewModelScope.launch {
             _categoryState.value = _categoryState.value.copy(
-                categories = CategoryRegistry.generateMockCategories()
+                categories = CategoryRepository.generateMockCategories()
             )
         }
     }

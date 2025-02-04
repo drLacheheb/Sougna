@@ -1,11 +1,11 @@
-package com.example.sougna.registry
+package com.example.sougna.repository
 
 import com.example.sougna.model.Category
 
 /**
  * Registry containing mock categories for demonstration purposes.
  */
-object CategoryRegistry {
+object CategoryRepository {
     /**
      * Generates a list of mock categories.
      *
