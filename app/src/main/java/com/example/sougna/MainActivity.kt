@@ -36,11 +36,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             SougnaTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "drLacheheb",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    //FirstUI(modifier = Modifier.padding(innerPadding))
+                   // Greeting(
+                    //    name = "Heyam",
+                     //   modifier = Modifier.padding(innerPadding)
+                   // )
+                    FirstUI(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -61,9 +61,13 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
  * Main composable function for the UI layout
  * @param modifier Modifier for layout adjustments
  */
+
 @Composable
 fun FirstUI(modifier: Modifier = Modifier) {
-    // TODO 1: Create state variables for text input and items list
+    //those are the State variables
+    var textValue by remember { mutableStateOf("") }
+    val allItems = remember { mutableStateListOf<String>() }
+    var searchQuery by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -71,16 +75,32 @@ fun FirstUI(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         SearchInputBar(
-            textValue = "", // TODO 2: Connect to state
-            onTextValueChange = { /* TODO 3: Update text state */ },
-            onAddItem = { /* TODO 4: Add item to list */ },
-            onSearch = { /* TODO 5: Implement search functionality */ }
+            textValue = textValue, // here i'm connecting the textValue
+            onTextValueChange = { newValue -> textValue = newValue }, // to update it like i did on react
+            onAddItem = {
+                // Add non-empty items to the list
+                if (textValue.isNotBlank()) {
+                    allItems.add(textValue)
+                    textValue = "" // Clear input field
+                }
+            },
+            onSearch = { query ->
+                searchQuery = query // updating the search
+            }
         )
 
-        // TODO 6: Display list of items using CardsList composable
-        CardsList(emptyList())
+        // this is for filtering
+        val displayedItems = if (searchQuery.isEmpty()) {
+            allItems
+        } else {
+            allItems.filter { it.contains(searchQuery, ignoreCase = true) }
+        }
+
+        // displaying the filtered list
+        CardsList(displayedItems)
     }
 }
+
 
 /**
  * Composable for search and input controls
@@ -110,13 +130,15 @@ fun SearchInputBar(
                 .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = { /* TODO 7: Handle add button click */ }) {
+            //to handel the buttons and connecting them
+            Button(onClick = { onAddItem(textValue) }) {
                 Text("Add")
             }
 
-            Button(onClick = { /* TODO 8: Handle search button click */ }) {
+            Button(onClick = { onSearch(textValue) }) {
                 Text("Search")
             }
+
         }
     }
 }
@@ -127,9 +149,7 @@ fun SearchInputBar(
  */
 @Composable
 fun CardsList(displayedItems: List<String>) {
-    // TODO 9: Implement LazyColumn to display items
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        // TODO 10: Create cards for each item in the list
         items(displayedItems) { item ->
             Card(
                 modifier = Modifier
@@ -137,7 +157,7 @@ fun CardsList(displayedItems: List<String>) {
                     .padding(vertical = 4.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                Text(text = "Sample Item", modifier = Modifier.padding(16.dp))
+                Text(text = item, modifier = Modifier.padding(16.dp))
             }
         }
     }
