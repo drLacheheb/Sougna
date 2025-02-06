@@ -37,10 +37,10 @@ class MainActivity : ComponentActivity() {
             SougnaTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "drLacheheb",
+                        name = "Bali Makdissi",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    //FirstUI(modifier = Modifier.padding(innerPadding))
+                    FirstUI(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -55,15 +55,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-
-
 /**
  * Main composable function for the UI layout
  * @param modifier Modifier for layout adjustments
  */
 @Composable
 fun FirstUI(modifier: Modifier = Modifier) {
-    // TODO 1: Create state variables for text input and items list
+    var userSearch by remember { mutableStateOf("") }
+    val items = remember { mutableStateListOf<String>() }
 
     Column(
         modifier = modifier
@@ -71,14 +70,22 @@ fun FirstUI(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         SearchInputBar(
-            textValue = "", // TODO 2: Connect to state
-            onTextValueChange = { /* TODO 3: Update text state */ },
-            onAddItem = { /* TODO 4: Add item to list */ },
-            onSearch = { /* TODO 5: Implement search functionality */ }
+            textValue = userSearch,
+            onTextValueChange = { newValue -> userSearch = newValue },
+            onAddItem = {
+                if (userSearch.isNotBlank()) {
+                    items.add(userSearch)
+                    userSearch = ""
+                }
+            },
+            onSearch = {
+                if (userSearch.isNotBlank()) {
+                    CardsList(displayedItems = listOf(userSearch))
+                }
+            }
         )
 
-        // TODO 6: Display list of items using CardsList composable
-        CardsList(emptyList())
+        CardsList(displayedItems = items)
     }
 }
 
@@ -94,7 +101,7 @@ fun SearchInputBar(
     textValue: String,
     onTextValueChange: (String) -> Unit,
     onAddItem: (String) -> Unit,
-    onSearch: (String) -> Unit
+    onSearch: @Composable (String) -> Unit
 ) {
     Column {
         TextField(
