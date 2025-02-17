@@ -4,6 +4,6 @@ import com.example.sougna.data.model.Category
 
 interface CategoryRepository {
 
-    fun generateMockCategories(): List<Category>
+    fun getAllCategories(): List<Category>
 
 }

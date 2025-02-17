@@ -135,11 +135,12 @@ fun ProductList(
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    onAddProductClick: () -> Unit
+    onAddProductClick: () -> Unit,
+    productViewModel: ProductViewModel
 ) {
 
     //inject viewModel
-    val productViewModel : ProductViewModel = hiltViewModel()
+    //val productViewModel : ProductViewModel = hiltViewModel()
     val categoryViewModel: CategoryViewModel = hiltViewModel()
 
 

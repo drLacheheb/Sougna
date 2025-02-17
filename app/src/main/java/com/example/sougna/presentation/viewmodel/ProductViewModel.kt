@@ -3,7 +3,8 @@ package com.example.sougna.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sougna.data.model.Product
-import com.example.sougna.data.repository.ProductRepository
+import com.example.sougna.domain.usecase.AddProductUseCase
+import com.example.sougna.domain.usecase.GetAllProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,10 @@ data class UIState(
  * - Uses StateFlow for observable state management
  */
 @HiltViewModel
-class ProductViewModel @Inject constructor(private val ProductRepositoryImp : ProductRepository) : ViewModel() {
+class ProductViewModel @Inject constructor(
+    private val getAllProductsUseCase: GetAllProductsUseCase,
+    private val addProductUseCase: AddProductUseCase
+) : ViewModel() {
     // Internal mutable state flow for product data
     private val _uiState = MutableStateFlow(UIState())
 
@@ -48,22 +52,40 @@ class ProductViewModel @Inject constructor(private val ProductRepositoryImp : Pr
 
     /**
      * Fetches products and updates the state.
-     * Uses mock data from ProductRegistry with simulated network delay.
      */
     private fun fetchProducts() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
-                // Simulate network delay
-                delay(2000)
+                // Fetch products using the use case
                 _uiState.value = _uiState.value.copy(
-                    products = ProductRepositoryImp.generateMockProducts(),
+                    products = getAllProductsUseCase(),
                     isLoading = false
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = e.message
+                )
+            }
+        }
+    }
+
+    /**
+     * Adds a new product and updates the state.
+     * @param product The product to be added
+     */
+    fun addProduct(product: Product) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true)
+            try {
+                addProductUseCase(product)
+                // Refresh the product list after successful addition
+                fetchProducts()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    error = e.message ?: "Failed to add product",
+                    isLoading = false
                 )
             }
         }

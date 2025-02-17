@@ -1,39 +1,32 @@
 package com.example.sougna.data.repository
 
 import com.example.sougna.data.model.Product
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 /**
  * Registry containing mock products for demonstration purposes.
  */
-class ProductRepositoryImp @Inject constructor() : ProductRepository {
-    /**
-     * Generates a list of mock products.
-     *
-     * @return List of Product objects with sample data
-     */
+class ProductRepositoryImp @Inject constructor(
+    private val firestore: FirebaseFirestore
+) : ProductRepository {
 
+    override suspend fun getAllProducts(): List<Product> {
+        return try {
+            val snapshot = firestore.collection("products").get().await()
+            snapshot.toObjects(Product::class.java)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 
-    override fun generateMockProducts(): List<Product> {
-        return listOf(
-            Product(
-                id = "1",
-                name = "iPhone 15 Pro",
-                description = "The latest flagship iPhone with advanced features.",
-                price = 999.99,
-                userId = "user1",
-                categoryId = "1",
-                thumbnailUrl = "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1693009279096"
-            ),
-            Product(
-                id = "2",
-                name = "iPhone 15",
-                description = "A powerful and affordable iPhone.",
-                price = 799.99,
-                userId = "user2",
-                categoryId = "1",
-                thumbnailUrl = "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1692927227504"
-            )
-        )
+    override suspend fun addProduct(product: Product): Boolean {
+        return try {
+            firestore.collection("products").add(product).await()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

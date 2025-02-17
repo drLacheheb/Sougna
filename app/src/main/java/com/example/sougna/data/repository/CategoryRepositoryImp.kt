@@ -4,16 +4,10 @@ import com.example.sougna.R
 import com.example.sougna.data.model.Category
 import javax.inject.Inject
 
-/**
- * Registry containing mock categories for demonstration purposes.
- */
+
 class CategoryRepositoryImp @Inject constructor(): CategoryRepository {
-    /**
-     * Generates a list of mock categories.
-     *
-     * @return List of Category objects with sample data
-     */
-    override fun generateMockCategories(): List<Category> {
+    
+    override fun getAllCategories(): List<Category> {
         return listOf(
             Category(
                 id = "1",

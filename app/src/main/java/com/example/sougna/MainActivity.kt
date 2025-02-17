@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,20 +36,28 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = "main"
                 ) {
+
+
                     composable("main") {
                         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                            //inject viewModel
+                            val productViewModel : ProductViewModel = hiltViewModel()
 
                             MainScreen(
                                 modifier = Modifier.padding(innerPadding),
-                                onAddProductClick = { navController.navigate("addProduct") }
+                                onAddProductClick = { navController.navigate("addProduct") },
+                                productViewModel = productViewModel
                             )
                         }
                     }
                     composable("addProduct") {
                          Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                             //inject viewModel
+                             val productViewModel : ProductViewModel = hiltViewModel()
                         AddProductScreen(
                             modifier = Modifier.padding(innerPadding),
-                            onBackClick = { navController.popBackStack() }
+                            onBackClick = { navController.popBackStack() },
+                            productViewModel = productViewModel
                         )
                          }
                     }

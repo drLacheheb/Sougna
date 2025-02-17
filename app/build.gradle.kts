@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.dagger.hilt.plugin)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.google.services) apply true
 }
 
 android {
@@ -63,6 +64,18 @@ dependencies {
     //Navigation compose
     implementation(libs.androidx.navigation.compose)
 
+
+    //firebase
+
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.analytics.ktx)
+    implementation(libs.google.firebase.auth.ktx)
+    implementation(libs.google.firebase.firestore.ktx)
+
+    //play services
+    //implementation(libs.google.play.services)
+
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -76,3 +89,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+

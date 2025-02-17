@@ -4,6 +4,7 @@ import com.example.sougna.data.model.Product
 
 interface ProductRepository {
 
-    fun generateMockProducts(): List<Product>
+    suspend fun getAllProducts(): List<Product>
+    suspend fun addProduct(product: Product): Boolean
 
 }

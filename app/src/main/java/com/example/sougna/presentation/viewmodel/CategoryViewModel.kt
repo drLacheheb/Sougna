@@ -3,7 +3,7 @@ package com.example.sougna.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sougna.data.model.Category
-import com.example.sougna.data.repository.CategoryRepository
+import com.example.sougna.domain.usecase.GetAllCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,7 +30,7 @@ data class CategoryState(
  */
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor( private val CategoryRepositoryImp: CategoryRepository) : ViewModel() {
+class CategoryViewModel @Inject constructor(private val getAllCategoriesUseCase: GetAllCategoriesUseCase) : ViewModel() {
     // Internal mutable state flow for category data
     private val _categoryState = MutableStateFlow(CategoryState())
 
@@ -49,7 +49,7 @@ class CategoryViewModel @Inject constructor( private val CategoryRepositoryImp: 
     private fun fetchCategories() {
         viewModelScope.launch {
             _categoryState.value = _categoryState.value.copy(
-                categories = CategoryRepositoryImp.generateMockCategories()
+                categories = getAllCategoriesUseCase.invoke()
             )
         }
     }
