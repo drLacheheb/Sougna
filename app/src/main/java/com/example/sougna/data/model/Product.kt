@@ -1,4 +1,4 @@
-package com.example.sougna.model
+package com.example.sougna.data.model
 
 import java.util.Date
 

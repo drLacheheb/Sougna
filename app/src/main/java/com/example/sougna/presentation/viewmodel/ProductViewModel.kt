@@ -1,14 +1,16 @@
-package com.example.sougna.viewmodel
+package com.example.sougna.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sougna.model.Product
-import com.example.sougna.repository.ProductRepository
+import com.example.sougna.data.model.Product
+import com.example.sougna.data.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Data class representing the UI state for products.
@@ -31,7 +33,8 @@ data class UIState(
  * - Provides methods to fetch and update product data
  * - Uses StateFlow for observable state management
  */
-class ProductViewModel() : ViewModel() {
+@HiltViewModel
+class ProductViewModel @Inject constructor(private val ProductRepositoryImp : ProductRepository) : ViewModel() {
     // Internal mutable state flow for product data
     private val _uiState = MutableStateFlow(UIState())
 
@@ -54,7 +57,7 @@ class ProductViewModel() : ViewModel() {
                 // Simulate network delay
                 delay(2000)
                 _uiState.value = _uiState.value.copy(
-                    products = ProductRepository.generateMockProducts(),
+                    products = ProductRepositoryImp.generateMockProducts(),
                     isLoading = false
                 )
             } catch (e: Exception) {

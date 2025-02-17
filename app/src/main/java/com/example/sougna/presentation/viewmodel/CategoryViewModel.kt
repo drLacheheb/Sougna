@@ -1,13 +1,15 @@
-package com.example.sougna.viewmodel
+package com.example.sougna.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sougna.model.Category
-import com.example.sougna.repository.CategoryRepository
+import com.example.sougna.data.model.Category
+import com.example.sougna.data.repository.CategoryRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Data class representing the state of categories in the application.
@@ -26,7 +28,9 @@ data class CategoryState(
  * - Provides methods to fetch and update category data
  * - Uses StateFlow for observable state management
  */
-class CategoryViewModel : ViewModel() {
+
+@HiltViewModel
+class CategoryViewModel @Inject constructor( private val CategoryRepositoryImp: CategoryRepository) : ViewModel() {
     // Internal mutable state flow for category data
     private val _categoryState = MutableStateFlow(CategoryState())
 
@@ -45,7 +49,7 @@ class CategoryViewModel : ViewModel() {
     private fun fetchCategories() {
         viewModelScope.launch {
             _categoryState.value = _categoryState.value.copy(
-                categories = CategoryRepository.generateMockCategories()
+                categories = CategoryRepositoryImp.generateMockCategories()
             )
         }
     }

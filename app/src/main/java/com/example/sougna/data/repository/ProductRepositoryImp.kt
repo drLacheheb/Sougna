@@ -1,17 +1,20 @@
-package com.example.sougna.repository
+package com.example.sougna.data.repository
 
-import com.example.sougna.model.Product
+import com.example.sougna.data.model.Product
+import javax.inject.Inject
 
 /**
  * Registry containing mock products for demonstration purposes.
  */
-object ProductRepository {
+class ProductRepositoryImp @Inject constructor() : ProductRepository {
     /**
      * Generates a list of mock products.
      *
      * @return List of Product objects with sample data
      */
-    fun generateMockProducts(): List<Product> {
+
+
+    override fun generateMockProducts(): List<Product> {
         return listOf(
             Product(
                 id = "1",
