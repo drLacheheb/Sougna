@@ -30,32 +30,17 @@ import androidx.compose.ui.unit.dp
 import com.example.sougna.ui.theme.SougnaTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            SougnaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "drLacheheb",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    //FirstUI(modifier = Modifier.padding(innerPadding))
-                }
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                FirstUI(modifier = Modifier.padding(innerPadding))
             }
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-
 
 /**
  * Main composable function for the UI layout
@@ -63,7 +48,10 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
  */
 @Composable
 fun FirstUI(modifier: Modifier = Modifier) {
-    // TODO 1: Create state variables for text input and items list
+    // TODO 1: Create state variables
+    var searchText by remember { mutableStateOf("") }
+    val items = remember { mutableStateListOf<String>() }
+    var displayedItems by remember { mutableStateOf(items.toList()) }
 
     Column(
         modifier = modifier
@@ -71,24 +59,30 @@ fun FirstUI(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         SearchInputBar(
-            textValue = "", // TODO 2: Connect to state
-            onTextValueChange = { /* TODO 3: Update text state */ },
-            onAddItem = { /* TODO 4: Add item to list */ },
-            onSearch = { /* TODO 5: Implement search functionality */ }
+            textValue = searchText, // TODO 2: Connected
+            onTextValueChange = { searchText = it }, // TODO 3: Update state
+            onAddItem = {
+                if (searchText.isNotBlank()) {
+                    items.add(searchText) // TODO 4: Add to list
+                    displayedItems = items.toList()
+                    searchText = ""
+                }
+            },
+            onSearch = {
+                // TODO 5: Implement search
+                displayedItems = if (searchText.isEmpty()) {
+                    items.toList()
+                } else {
+                    items.filter { it.contains(searchText, true) }
+                }
+            }
         )
 
-        // TODO 6: Display list of items using CardsList composable
-        CardsList(emptyList())
+        // TODO 6: Display items
+        CardsList(displayedItems = displayedItems)
     }
 }
 
-/**
- * Composable for search and input controls
- * @param textValue Current value of the input field
- * @param onTextValueChange Callback for text changes
- * @param onAddItem Callback for adding new items
- * @param onSearch Callback for performing search
- */
 @Composable
 fun SearchInputBar(
     textValue: String,
@@ -110,26 +104,27 @@ fun SearchInputBar(
                 .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = { /* TODO 7: Handle add button click */ }) {
+            Button(onClick = {
+                // TODO 7: Handle add
+                onAddItem(textValue)
+            }) {
                 Text("Add")
             }
 
-            Button(onClick = { /* TODO 8: Handle search button click */ }) {
+
+            Button(onClick = {
+                // TODO 8: Handle search
+                onSearch(textValue)
+            }) {
                 Text("Search")
             }
         }
     }
 }
-
-/**
- * Composable for displaying a list of items in cards
- * @param displayedItems List of items to display
- */
 @Composable
 fun CardsList(displayedItems: List<String>) {
-    // TODO 9: Implement LazyColumn to display items
+    // TODO 9 & 10: LazyColumn with cards
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        // TODO 10: Create cards for each item in the list
         items(displayedItems) { item ->
             Card(
                 modifier = Modifier
@@ -137,7 +132,7 @@ fun CardsList(displayedItems: List<String>) {
                     .padding(vertical = 4.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                Text(text = "Sample Item", modifier = Modifier.padding(16.dp))
+                Text(text = item, modifier = Modifier.padding(16.dp))
             }
         }
     }
