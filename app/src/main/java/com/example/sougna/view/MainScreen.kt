@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 //import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -34,12 +35,9 @@ fun MainScreen(
     categoryViewModel: CategoryViewModel,
     modifier: Modifier = Modifier
 ) {
-
     val productState by productViewModel.uiState.collectAsState()
     val categoryState by categoryViewModel.categoryState.collectAsState()
-
     var searchText by remember { mutableStateOf("") }
-
 
     val filteredProducts = productState.products.filter { product ->
         product.name.contains(searchText, ignoreCase = true)
@@ -60,7 +58,7 @@ fun MainScreen(
             onSearchTextChange = { searchText = it }
         )
         CategoryGrid(categories = filteredCategories)
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
         ProductGrid(products = filteredProducts)
     }
 }
@@ -70,16 +68,14 @@ fun TopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(8.dp),  // Reduced padding
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
-            Text("Sougna", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-            Text("")
-            Text("Order your favorite product!", fontSize = 10.sp)
+            Text("Sougna", fontSize = 24.sp, fontWeight = FontWeight.Bold)  // Reduced font size
+            Text("Order your favorite product!", fontSize = 15.sp)  // Reduced font size
         }
-        // I can add the profile pic here
     }
 }
 
@@ -91,11 +87,11 @@ fun SearchBar(
     TextField(
         value = searchText,
         onValueChange = onSearchTextChange,
-        placeholder = { Text("Search...") },
+        placeholder = { Text("Search...", fontSize = 15.sp) },  // Reduced font size
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
-            .clip(RoundedCornerShape(12.dp)),
+            .padding(10.dp)  // Reduced padding
+            .clip(RoundedCornerShape(12.dp)),  // Reduced corner radius
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = Color.LightGray.copy(alpha = 0.1f),
             focusedContainerColor = Color.LightGray.copy(alpha = 0.1f),
@@ -104,12 +100,13 @@ fun SearchBar(
             cursorColor = MaterialTheme.colorScheme.primary
         ),
         singleLine = true,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(12.dp),  // Reduced corner radius
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                modifier = Modifier.size(20.dp)  // Reduced icon size
             )
         }
     )
@@ -119,16 +116,16 @@ fun SearchBar(
 fun CategoryGrid(categories: List<Category>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(4),
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(6.dp)  // Reduced padding
     ) {
         items(categories) { category ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(4.dp)  // Reduced padding
             ) {
                 Box(
                     modifier = Modifier
-                        .size(64.dp)
+                        .size(50.dp)  // Reduced box size
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
@@ -138,15 +135,15 @@ fun CategoryGrid(categories: List<Category>) {
                         contentDescription = category.description,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(40.dp)  // Reduced image size
                             .clip(CircleShape)
                     )
                 }
                 Text(
                     text = category.name,
-                    fontSize = 12.sp,
+                    fontSize = 12.sp,  // Reduced font size
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier.padding(top = 4.dp)  // Reduced padding
                 )
             }
         }
@@ -155,23 +152,51 @@ fun CategoryGrid(categories: List<Category>) {
 
 @Composable
 fun ProductGrid(products: List<Product>) {
-    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.padding(16.dp)) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.padding(8.dp)  // Reduced padding
+    ) {
         items(products) { product ->
             Card(
-                modifier = Modifier.padding(8.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                modifier = Modifier
+                    .padding(4.dp)  // Reduced padding
+                    .height(230.dp),  // Reduced card height
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)  // Reduced elevation
             ) {
-                Column(modifier = Modifier.padding(8.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(6.dp),  // Reduced padding
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
                     AsyncImage(
                         model = product.thumbnailUrl,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .height(120.dp)
+                            .height(120.dp)  // Reduced image height
                             .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))  // Reduced corner radius
                     )
-                    Text(product.name, fontWeight = FontWeight.Bold)
-                    Text("${product.price} DA", color = Color(0xFFFF9800), fontWeight = FontWeight.Bold)
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)  // Reduced spacing
+                    ) {
+                        Text(
+                            text = product.name,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = 15.sp  // Reduced font size
+                        )
+                        Text(
+                            text = "${product.price} DA",
+                            color = Color(0xFFFF9800),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp  // Reduced font size
+                        )
+                    }
                 }
             }
         }
