@@ -1,166 +1,203 @@
 package com.example.sougna.view
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+//import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+//import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.sougna.model.Category
 import com.example.sougna.model.Product
 import com.example.sougna.viewmodel.CategoryViewModel
 import com.example.sougna.viewmodel.ProductViewModel
 
-
-/**
- * Composable function that displays a list of categories
- * @param categories The list of categories to display
- * @param modifier Modifier for the layout
- */
-@Composable
-fun CategoryList(
-    categories: List<Category>,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(modifier = modifier) {
-        items(categories) { category ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Display category icon
-                Image(
-                    painter = painterResource(id = category.icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                // Display category name
-                Text(text = category.name)
-            }
-        }
-    }
-}
-
-/**
- * Composable function that displays a list of products in card format
- * @param products The list of products to display
- * @param modifier Modifier for the layout
- */
-@Composable
-fun ProductList(
-    products: List<Product>,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(modifier = modifier) {
-        items(products) { product ->
-            // Card container for each product
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    // Product image
-                    AsyncImage(
-                        model = product.thumbnailUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    // Product name
-                    Text(
-                        text = product.name,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    // Product description
-                    Text(
-                        text = product.description,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    // Product price
-                    Text(
-                        text = "$${product.price}",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
-        }
-    }
-}
-
-/**
- * Main screen composable that displays both categories and products
- * @param productViewModel ViewModel for product data
- * @param categoryViewModel ViewModel for category data
- * @param modifier Modifier for the layout
- */
 @Composable
 fun MainScreen(
     productViewModel: ProductViewModel,
     categoryViewModel: CategoryViewModel,
     modifier: Modifier = Modifier
 ) {
-    // Collect state from ViewModels
     val productState by productViewModel.uiState.collectAsState()
     val categoryState by categoryViewModel.categoryState.collectAsState()
+    var searchText by remember { mutableStateOf("") }
 
-    Column(modifier = modifier.padding(16.dp)) {
-        // Display category list
-        CategoryList(
-            categories = categoryState.categories,
-            modifier = Modifier.fillMaxWidth()
+    val filteredProducts = productState.products.filter { product ->
+        product.name.contains(searchText, ignoreCase = true)
+    }
+
+    val filteredCategories = categoryState.categories.filter { category ->
+        category.name.contains(searchText, ignoreCase = true)
+    }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        TopBar()
+        SearchBar(
+            searchText = searchText,
+            onSearchTextChange = { searchText = it }
         )
+        CategoryGrid(categories = filteredCategories)
+        Spacer(modifier = Modifier.height(4.dp))
+        ProductGrid(products = filteredProducts)
+    }
+}
 
-        // Handle product state
-        when {
-            productState.isLoading -> {
-                // Show loading indicator
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            productState.error != null -> {
-                // Show error message
+@Composable
+fun TopBar() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),  // Reduced padding
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column {
+            Text("Sougna", fontSize = 24.sp, fontWeight = FontWeight.Bold)  // Reduced font size
+            Text("Order your favorite product!", fontSize = 15.sp)  // Reduced font size
+        }
+    }
+}
+
+@Composable
+fun SearchBar(
+    searchText: String,
+    onSearchTextChange: (String) -> Unit
+) {
+    TextField(
+        value = searchText,
+        onValueChange = onSearchTextChange,
+        placeholder = { Text("Search...", fontSize = 15.sp) },  // Reduced font size
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)  // Reduced padding
+            .clip(RoundedCornerShape(12.dp)),  // Reduced corner radius
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.1f),
+            focusedContainerColor = Color.LightGray.copy(alpha = 0.1f),
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            cursorColor = MaterialTheme.colorScheme.primary
+        ),
+        singleLine = true,
+        shape = RoundedCornerShape(12.dp),  // Reduced corner radius
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                modifier = Modifier.size(20.dp)  // Reduced icon size
+            )
+        }
+    )
+}
+
+@Composable
+fun CategoryGrid(categories: List<Category>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(4),
+        modifier = Modifier.padding(6.dp)  // Reduced padding
+    ) {
+        items(categories) { category ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(4.dp)  // Reduced padding
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(50.dp)  // Reduced box size
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                    contentAlignment = Alignment.Center
+                ) {
+                    AsyncImage(
+                        model = category.icon,
+                        contentDescription = category.description,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(40.dp)  // Reduced image size
+                            .clip(CircleShape)
+                    )
+                }
                 Text(
-                    text = "Error: ${productState.error}",
-                    color = Color.Red,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    text = category.name,
+                    fontSize = 12.sp,  // Reduced font size
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 4.dp)  // Reduced padding
                 )
             }
-            else -> {
-                // Display product list
-                ProductList(
-                    products = productState.products,
-                    modifier = Modifier.fillMaxWidth()
-                )
+        }
+    }
+}
+
+@Composable
+fun ProductGrid(products: List<Product>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.padding(8.dp)  // Reduced padding
+    ) {
+        items(products) { product ->
+            Card(
+                modifier = Modifier
+                    .padding(4.dp)  // Reduced padding
+                    .height(230.dp),  // Reduced card height
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)  // Reduced elevation
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(6.dp),  // Reduced padding
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    AsyncImage(
+                        model = product.thumbnailUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .height(120.dp)  // Reduced image height
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))  // Reduced corner radius
+                    )
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)  // Reduced spacing
+                    ) {
+                        Text(
+                            text = product.name,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            fontSize = 15.sp  // Reduced font size
+                        )
+                        Text(
+                            text = "${product.price} DA",
+                            color = Color(0xFFFF9800),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp  // Reduced font size
+                        )
+                    }
+                }
             }
         }
     }

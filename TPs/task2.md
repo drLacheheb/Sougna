@@ -28,7 +28,7 @@ Your task is to implement the first UI in `view/MainScreen` based on the design 
    - Add a search bar to the top of the `view/MainScreen` UI.
    - Implement functionality to filter the product list based on the search query (e.g., by product name or category).
 
-## Instructions
+## Instructions 
 
 1. Open `view/MainScreen.kt`.
 2. Implement the UI layout in `view/MainScreen`.

@@ -25,4 +25,5 @@ data class Product(
     val thumbnailUrl: String,
     val createdAt: Date = Date(),
     val updatedAt: Date = Date()
+
 )
