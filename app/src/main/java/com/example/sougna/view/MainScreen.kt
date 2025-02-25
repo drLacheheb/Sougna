@@ -1,6 +1,5 @@
 package com.example.sougna.view
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.sougna.R
 import com.example.sougna.model.Category
 import com.example.sougna.model.Product
 import com.example.sougna.viewmodel.CategoryViewModel
@@ -37,21 +37,27 @@ fun MainScreen(
     val productState by productViewModel.uiState.collectAsState()
 
     Column(modifier = modifier.padding(16.dp)) {
-        Text(
-            text = "Sougna",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = "Order your favorite Product!",
-            fontSize = 14.sp,
-            color = Color.Gray
-        )
+        // ✅ إضافة صورة الحساب على اليمين
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(text = "Sougna", fontSize = 26.sp, fontWeight = FontWeight.Bold)
+                Text(text = "Order your favorite Product!", fontSize = 14.sp, color = Color.Gray)
+            }
+            Image(
+                painter = painterResource(id = R.drawable.profile_picture), // ضع صورة الحساب هنا
+                contentDescription = "Profile Picture",
+                modifier = Modifier.size(40.dp).clip(RoundedCornerShape(50))
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
-        SearchBar(onSearch = { query ->
-            productViewModel.searchProducts(query)
-        })
+        SearchBar(
+            onSearch = { query -> productViewModel.searchProducts(query) }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
         CategoryList(categories = categories)
@@ -73,18 +79,34 @@ fun MainScreen(
 fun SearchBar(onSearch: (String) -> Unit) {
     var query by remember { mutableStateOf("") }
 
-    OutlinedTextField(
-        value = query,
-        onValueChange = {
-            query = it
-            onSearch(it)
-        },
-        label = { Text("Search...") },
-        shape = RoundedCornerShape(20.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    )
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        OutlinedTextField(
+            value = query,
+            onValueChange = {
+                query = it
+                onSearch(it)
+            },
+            label = { Text("Search...") },
+            shape = RoundedCornerShape(20.dp),
+            modifier = Modifier
+                .weight(1f) // يجعل مربع البحث يأخذ معظم المساحة
+                .padding(end = 8.dp) // مسافة بين مربع البحث وأيقونة الإعدادات
+        )
+
+        // ✅ أيقونة الإعدادات بجانب مربع البحث
+        IconButton(
+            onClick = { /* منطق الإعدادات هنا */ },
+            modifier = Modifier.size(48.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.filtre), // استخدم صورة الإعدادات
+                contentDescription = "Settings Icon"
+            )
+        }
+    }
 }
 
 @Composable
@@ -120,18 +142,11 @@ fun ProductList(products: List<Product>) {
                     Image(
                         painter = rememberAsyncImagePainter(product.thumbnailUrl),
                         contentDescription = product.name,
-                        modifier = Modifier
-                            .size(120.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                        modifier = Modifier.size(120.dp).clip(RoundedCornerShape(8.dp))
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = product.name, fontWeight = FontWeight.Bold)
-                    Text(
-                        text = product.description, // ✅ إضافة وصف المنتج
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        maxLines = 2
-                    )
+                    Text(text = product.description, fontSize = 12.sp, color = Color.Gray, maxLines = 2)
                     Text(text = "${product.price} DA", color = Color(0xFFFFA000), fontWeight = FontWeight.Bold)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(text = "${product.rating} ⭐", fontSize = 12.sp)
