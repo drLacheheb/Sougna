@@ -1,68 +1,66 @@
 package com.example.sougna.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sougna.model.Product
 import com.example.sougna.repository.ProductRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-/**
- * Data class representing the UI state for products.
- *
- * @property isLoading Indicates if data is currently being loaded
- * @property products List of currently loaded products
- * @property error Error message if any occurred during data fetching
- */
-data class UIState(
-    val isLoading: Boolean = false,
+// UI state data class to handle product UI state
+data class ProductUIState(
     val products: List<Product> = emptyList(),
+    val isLoading: Boolean = false,
     val error: String? = null
 )
 
-/**
- * ViewModel responsible for managing product-related data and state.
- *
- * This ViewModel:
- * - Holds and exposes the current state of products
- * - Provides methods to fetch and update product data
- * - Uses StateFlow for observable state management
- */
-class ProductViewModel() : ViewModel() {
-    // Internal mutable state flow for product data
-    private val _uiState = MutableStateFlow(UIState())
+class ProductViewModel : ViewModel() {
 
-    // Public immutable state flow exposed to UI components
-    val uiState: StateFlow<UIState> = _uiState.asStateFlow()
+    private val productRepository = ProductRepository()
+
+    // The state of the products UI
+    private val _uiState = MutableStateFlow(ProductUIState(isLoading = true))
+    val uiState: StateFlow<ProductUIState> = _uiState
+
+    // To keep the original list of products for filtering
+    private var allProducts: List<Product> = emptyList()
 
     init {
-        // Fetch products when ViewModel is initialized
-        fetchProducts()
+        loadProducts()
     }
 
-    /**
-     * Fetches products and updates the state.
-     * Uses mock data from ProductRegistry with simulated network delay.
-     */
-    private fun fetchProducts() {
+    // Function to load products
+    fun loadProducts() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
             try {
-                // Simulate network delay
-                delay(2000)
-                _uiState.value = _uiState.value.copy(
-                    products = ProductRepository.generateMockProducts(),
-                    isLoading = false
-                )
+                _uiState.value = ProductUIState(isLoading = true)
+                Log.d("ProductViewModel", "Loading products...")
+
+                // Using collect to gather the data
+                productRepository.getProducts().collect { productList ->
+                    Log.d("ProductViewModel", "Products loaded: ${productList.size} products found.")
+                    allProducts = productList
+                    _uiState.value = ProductUIState(products = allProducts)
+                }
             } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message
-                )
+                Log.e("ProductViewModel", "Error loading products: ${e.message}", e)
+                _uiState.value = ProductUIState(error = e.message)
             }
         }
+    }
+
+    // Function to filter products by name or category
+    fun searchProducts(query: String) {
+        Log.d("ProductViewModel", "Searching products with query: $query")
+
+        val filteredProducts = allProducts.filter { product ->
+            product.name.contains(query, ignoreCase = true) ||
+                    product.categoryId.contains(query, ignoreCase = true)
+        }
+        Log.d("ProductViewModel", "Found ${filteredProducts.size} products matching the query.")
+
+        _uiState.value = ProductUIState(products = filteredProducts)
     }
 }
