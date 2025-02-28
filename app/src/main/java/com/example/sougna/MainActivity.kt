@@ -13,7 +13,6 @@ import com.example.sougna.view.MainScreen
 import com.example.sougna.viewmodel.CategoryViewModel
 import com.example.sougna.viewmodel.ProductViewModel
 
-
 /**
  * Main activity for the app
  */
@@ -28,17 +27,14 @@ class MainActivity : ComponentActivity() {
                     val productViewModel = viewModel<ProductViewModel>()
                     val categoryViewModel = viewModel<CategoryViewModel>()
 
-
+                    // هنا يتم تمرير `innerPadding` إلى MainScreen
                     MainScreen(
-                        productViewModel,
-                        categoryViewModel,
-                        modifier = Modifier.padding(innerPadding)
+                        productViewModel = productViewModel,
+                        categoryViewModel = categoryViewModel,
+                        modifier = Modifier.padding(innerPadding) // تطبيق المسافة الفاصلة
                     )
                 }
-
             }
         }
     }
 }
-
-
