@@ -1,4 +1,4 @@
-package com.example.sougna.model
+package com.example.sougna.data.model
 
 /**
  * Represents a product category in the application.

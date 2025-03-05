@@ -8,6 +8,16 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2024.04.01"
+hiltVersion = "2.51.1"
+hiltNavigation = "1.2.0"
+kaptVersion = "2.1.10"
+navigatinCompose = "2.8.7"
+gms = "4.4.2"
+firebase = "33.9.0"
+firestore = "25.1.2"
+auth = "23.2.0"
+analytics  = "22.2.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,8 +38,23 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 io-coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version = "2.4.0" }
 
+dagger-hilt = {group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion"}
+dagger-hilt-compiler = {group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion"}
+androidx-hilt-navigation-compose = {group="androidx.hilt",name = "hilt-navigation-compose", version.ref = "hiltNavigation"}
+androidx-navigation-compose = { group="androidx.navigation",name="navigation-compose",version.ref = "navigatinCompose"}
+
+
+google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+google-firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" ,version.ref = "analytics"}
+google-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" , version.ref="auth"}
+google-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firestore" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+dagger-hilt-plugin = {id = "com.google.dagger.hilt.android", version.ref = "hiltVersion"}
+kotlin-kapt = {id = "org.jetbrains.kotlin.kapt" , version.ref = "kaptVersion"}
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "gms" }
 
