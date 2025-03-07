@@ -43,7 +43,14 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    // ViewModel Kotlin extensions for easier ViewModel usage
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    // Compose integration for ViewModel to use ViewModel in composable functions
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // Compose integration with Activity for setting up Compose UI in Activities
     implementation(libs.androidx.activity.compose)
+    // Coil image loading library for Compose to load and display images efficiently
+    implementation(libs.io.coil.kt.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
