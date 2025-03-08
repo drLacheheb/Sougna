@@ -19,6 +19,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Sougna"
+
+rootProject.name = "sogna"
+
 include(":app")
  
