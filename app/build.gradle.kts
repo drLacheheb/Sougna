@@ -54,12 +54,12 @@ dependencies {
     // Compose integration with Activity for setting up Compose UI in Activities
     implementation(libs.androidx.activity.compose)
 
-
     // Coil image loading library for Compose to load and display images efficiently
     implementation(libs.io.coil.kt.compose)
 
     //Dagger Hilt
     implementation(libs.dagger.hilt)
+    implementation(libs.play.services.cast.framework)
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 

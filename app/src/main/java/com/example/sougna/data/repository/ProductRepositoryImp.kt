@@ -17,50 +17,55 @@ class ProductRepositoryImp @Inject constructor() : ProductRepository {
             name = "iPhone 15 Pro",
             description = "The latest flagship iPhone with advanced features.",
             price = 999.99,
-            userId = "user1",
             rating = 3.5,
+            userId = "user1",
             categoryId = "7",
-            thumbnailUrl = "https://images.unsplash.com/photo-1695048132832-b41495f12eb4?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1695048132832-b41495f12eb4?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
         Product(
             id = "2",
             name = "MacBook Pro 16-inch",
             description = "A powerful laptop for professionals, featuring the M2 Pro chip.",
             price = 2499.99,
-            userId = "user2",
             rating = 2.5,
+            userId = "user2",
             categoryId = "7",
-            thumbnailUrl = "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
         Product(
             id = "9",
             name = "Smart Watch",
             description = "Track your fitness and stay connected with this modern smartwatch.",
             price = 299.99,
-            userId = "user3",
             rating = 5.0,
+            userId = "user3",
             categoryId = "7",
-            thumbnailUrl = "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
         Product(
             id = "10",
             name = "Gaming Headset",
             description = "Immersive gaming headset with noise cancellation.",
             price = 149.99,
-            userId = "user4",
             rating = 4.0,
+            userId = "user4",
             categoryId = "7",
-            thumbnailUrl = "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
         Product(
             id = "11",
             name = "Wireless Mouse",
             description = "Ergonomic wireless mouse for productivity and gaming.",
             price = 79.99,
-            userId = "user5",
             rating = 2.0,
+            userId = "user5",
             categoryId = "7",
-            thumbnailUrl = "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
 
         // Fashion Category
@@ -69,10 +74,11 @@ class ProductRepositoryImp @Inject constructor() : ProductRepository {
             name = "Leather Jacket",
             description = "A stylish and durable leather jacket for all seasons.",
             price = 199.99,
+            rating = 2.5,
             userId = "user6",
             categoryId = "2",
-            rating = 2.5,
-            thumbnailUrl = "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
 
         // Pets Category - Updated image
@@ -84,7 +90,8 @@ class ProductRepositoryImp @Inject constructor() : ProductRepository {
             rating = 2.0,
             userId = "user7",
             categoryId = "3",
-            thumbnailUrl = "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         ),
 
         // Travel Category
@@ -96,7 +103,8 @@ class ProductRepositoryImp @Inject constructor() : ProductRepository {
             rating = 2.5,
             userId = "user8",
             categoryId = "5",
-            thumbnailUrl = "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=60"
+            thumbnailUrl = "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=60",
+            imageUri = "https://example.com/image1.jpg"
         )
     )
 
