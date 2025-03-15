@@ -1,7 +1,13 @@
 package com.example.sougna.presentation.view.components
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -15,12 +21,14 @@ import androidx.compose.ui.unit.sp
 import com.example.sougna.R
 
 @Composable
-fun Navbar() {
+fun Navbar(
+    onSearch: (String) -> Unit // استقبال دالة البحث كمعامل
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState()) // Enables scrolling
-            .animateContentSize() // Smooth transition effect
+            .verticalScroll(rememberScrollState()) // تمكين التمرير
+            .animateContentSize() // تأثير انتقال سلس
             .padding(16.dp)
     ) {
         Row(
@@ -33,7 +41,7 @@ fun Navbar() {
                     text = "Sougna",
                     fontSize = 36.sp,
                     fontWeight = FontWeight(900),
-                    fontFamily = FontFamily.Cursive
+                    fontFamily = FontFamily.Cursive,
                 )
 
                 Spacer(modifier = Modifier.height(7.dp))
@@ -41,9 +49,8 @@ fun Navbar() {
                 Text(
                     text = "Order your favorite product",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontFamily = FontFamily.Cursive
-                )
+                    fontWeight = FontWeight.ExtraBold)
+
             }
 
             ProfileButton(profileImageId = R.drawable.profile)
@@ -51,6 +58,7 @@ fun Navbar() {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        SearchBar()
+        // تمرير دالة البحث إلى SearchBar
+        SearchBar(onSearch = onSearch)
     }
 }

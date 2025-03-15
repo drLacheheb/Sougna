@@ -1,10 +1,23 @@
 package com.example.sougna.presentation.view
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -13,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.sougna.presentation.view.buttons.EnterButton
 import com.example.sougna.presentation.view.buttons.FirstPaginition
-import com.example.sougna.presentation.view.pages.IntroPage
 import com.example.sougna.presentation.view.buttons.NextButton
+import com.example.sougna.presentation.view.pages.IntroPage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,11 +59,11 @@ fun IntroScreen(navController: NavHostController) {
     ) {
 
         //HorizontalPager(count = 3, state = pagerState) { page ->
-            when (pagerState) {
-                0 -> FirstPaginition("Sougna", "")
-                1 -> IntroPage("Fast & Secure", "Payment and Explore is secure.")
-                2 -> IntroPage("Get Started", "Let's dive into the app!")
-            }
+        when (pagerState) {
+            0 -> FirstPaginition("Sougna", "")
+            1 -> IntroPage("Fast & Secure", "Payment and Explore is secure.")
+            2 -> IntroPage("Get Started", "Let's dive into the app!")
+        }
         //}
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -70,4 +83,3 @@ fun IntroScreen(navController: NavHostController) {
         }
     }
 }
-

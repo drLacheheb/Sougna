@@ -29,7 +29,7 @@ fun ProfileButton(profileImageId: Int?) {
     ) {
         Image(
             painter = if (profileImageId != null) {
-                painterResource(id = profileImageId) // Load profile image if available
+                painterResource(id =R.drawable.default_profile) // Load profile image if available
             } else {
                 painterResource(id = R.drawable.default_profile) // Default image if no profile image
             },

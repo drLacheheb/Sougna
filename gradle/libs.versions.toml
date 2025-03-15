@@ -17,6 +17,7 @@ firebase = "33.9.0"
 firestore = "25.1.2"
 auth = "23.2.0"
 analytics  = "22.2.0"
+playServicesCastFramework = "22.0.0"
 
 
 [libraries]
@@ -48,6 +49,7 @@ google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", ve
 google-firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" ,version.ref = "analytics"}
 google-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" , version.ref="auth"}
 google-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firestore" }
+play-services-cast-framework = { group = "com.google.android.gms", name = "play-services-cast-framework", version.ref = "playServicesCastFramework" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,35 +1,62 @@
 package com.example.sougna.presentation.view
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import android.net.Uri
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.example.sougna.presentation.view.buttons.BackPressToExit
-import com.example.sougna.presentation.viewmodel.CategoryViewModel
-import com.example.sougna.presentation.viewmodel.ProductViewModel
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
+import com.example.sougna.data.model.Product
 
-
-
-/**
- * Composable function that displays a list of categories
- * @param categories The list of categories to display
- * @param modifier Modifier for the layout
- */
 @Composable
-fun MainScreen(
-    productViewModel: ProductViewModel,
-    categoryViewModel: CategoryViewModel,
-    modifier: Modifier = Modifier
-) {
-    BackPressToExit()
+fun MainScreen(navController: NavHostController) {
+    val products = remember { mutableStateListOf<Product>() }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        Text("Welcome to the app!")
+    Column(modifier = Modifier.fillMaxSize()) {
+        Button(onClick = { navController.navigate("addProduct") }) {
+            Text(" Add product ")
+        }
+
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            items(products) { product ->
+                ProductItem(product = product)
+            }
+        }
     }
-//    val products by productViewModel.products.collectAsState()
-//    val categories by categoryViewModel.categories.collectAsState()
 }
 
+@Composable
+fun ProductItem(product: Product) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = product.name, style = MaterialTheme.typography.headlineSmall)
+            Text(text = "السعر: ${product.price}", style = MaterialTheme.typography.bodyMedium)
+            Text(text = product.description, style = MaterialTheme.typography.bodyMedium)
+            if (product.imageUri != null) {
+                Image(
+                    painter = rememberAsyncImagePainter(product.imageUri),
+                    contentDescription = "product's image ",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
+    }
+}
