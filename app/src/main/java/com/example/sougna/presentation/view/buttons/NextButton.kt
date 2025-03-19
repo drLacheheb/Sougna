@@ -20,10 +20,10 @@ fun NextButton(onClick: () -> Unit) {
     ) {
         Button(
             onClick = { onClick() },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE63946)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFDFCFC)),
             shape = RoundedCornerShape(9.dp)
         ) {
-            Text("Next", color = Color.White)
+            Text("Next", color = Color(0xFF6A8DF7)) // درجة أفتح من الأزرق
         }
     }
 }

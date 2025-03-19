@@ -14,13 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.sougna.presentation.viewmodel.CategoryViewModel
 import com.example.sougna.presentation.viewmodel.ProductViewModel
 
-
 @SuppressLint("RememberReturnType")
 @Composable
-fun HeroSection() {
+fun HeroSection(navController: NavHostController) { // ✅ تغيير نوع المعامل إلى NavHostController
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,11 +35,10 @@ fun HeroSection() {
 
         Spacer(modifier = Modifier.height(5.dp))
 
-            CategoriesRow(categories.categories)
+        CategoriesRow(categories.categories)
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        // Product Grid
-        ProductGrid(uiState.products)
+        ProductGrid(products = uiState.products, navController = navController) // ✅ تمرير navController الصحيح
     }
 }
