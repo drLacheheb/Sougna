@@ -14,7 +14,6 @@ import com.example.sougna.presentation.viewmodel.ProductViewModel
 fun AppNavigator() {
     val navController = rememberNavController()
 
-    // ✅ احصل على ProductViewModel مرة واحدة فقط ومرره للشاشات
     val productViewModel: ProductViewModel = hiltViewModel()
 
     NavHost(navController, startDestination = "intro") {

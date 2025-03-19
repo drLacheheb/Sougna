@@ -29,7 +29,7 @@ import com.example.sougna.presentation.viewmodel.ProductViewModel
 @Composable
 fun AddProductScreen(
     navController: NavHostController,
-    productViewModel: ProductViewModel // ✅ تمرير ProductViewModel
+    productViewModel: ProductViewModel
 ) {
     val addProductViewModel: AddProductViewModel = hiltViewModel()
     val state by addProductViewModel.state.collectAsState()
@@ -44,8 +44,8 @@ fun AddProductScreen(
 
     LaunchedEffect(isProductAdded) {
         if (isProductAdded && newProduct != null) {
-            productViewModel.addProduct(newProduct!!) // ✅ تحديث القائمة
-            navController.popBackStack() // ✅ العودة للخلف
+            productViewModel.addProduct(newProduct!!) // تحديث القائمة
+            navController.popBackStack() //  العودة للخلف
         }
     }
 
@@ -188,7 +188,7 @@ fun CategoryDropdown(
     selectedCategory: Int,
     onCategorySelected: (Int) -> Unit
 ) {
-    val categories = listOf(1 to "Shoes", 2 to "Bags", 3 to "Clothes") // ✅ قائمة التصنيفات
+    val categories = listOf(1 to "Electronics", 2 to "Fashion", 3 to "Home & Kitchen")
     var expanded by remember { mutableStateOf(false) }
 
     Box {
@@ -206,7 +206,7 @@ fun CategoryDropdown(
                 DropdownMenuItem(
                     text = { Text(name) },
                     onClick = {
-                        onCategorySelected(id) // ✅ تحديث categoryId
+                        onCategorySelected(id)
                         expanded = false
                     }
                 )
