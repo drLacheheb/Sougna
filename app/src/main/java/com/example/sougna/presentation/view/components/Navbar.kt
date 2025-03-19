@@ -46,7 +46,7 @@ fun Navbar() {
                 )
             }
 
-            ProfileButton(profileImageId = R.drawable.profile)
+            ProfileButton(profileImageId = R.drawable.img)
         }
 
         Spacer(modifier = Modifier.height(10.dp))

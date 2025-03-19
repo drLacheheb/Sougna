@@ -7,7 +7,14 @@ import javax.inject.Inject
 class AddProductUseCase @Inject constructor(
     private val productRepository: ProductRepository
 ) {
-    suspend operator fun invoke(product: Product) {
-        return productRepository.addProduct(product)
+    suspend operator fun invoke(product: Product): Boolean {
+        return try {
+            productRepository.addProduct(product)
+            println("✅ المنتج أُضيف بنجاح إلى المستودع!")
+            true
+        } catch (e: Exception) {
+            println("❌ خطأ أثناء إضافة المنتج: ${e.message}")
+            false
+        }
     }
 }

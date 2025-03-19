@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
 fun IntroScreen(navController: NavHostController) {
-    var pagerState by remember { mutableStateOf(0) }
+    var pagerState by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
     var showButton by remember { mutableStateOf(false) }
     var moveTextUp by remember { mutableStateOf(false) }
@@ -38,7 +38,7 @@ fun IntroScreen(navController: NavHostController) {
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
-                    colors = listOf(Color(0xFFFF6B6B), Color(0xFFE63946))
+                    colors = listOf(Color(0xFFE67E7E), Color(0xFF6494E8))
                 )
             ),
         verticalArrangement = Arrangement.Center,

@@ -31,7 +31,7 @@ fun ProfileButton(profileImageId: Int?) {
             painter = if (profileImageId != null) {
                 painterResource(id = profileImageId) // Load profile image if available
             } else {
-                painterResource(id = R.drawable.default_profile) // Default image if no profile image
+                painterResource(id = R.drawable.img) // Default image if no profile image
             },
             contentDescription = "Profile",
             modifier = Modifier

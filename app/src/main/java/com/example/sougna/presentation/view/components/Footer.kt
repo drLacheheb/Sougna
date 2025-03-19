@@ -3,6 +3,7 @@ package com.example.sougna.presentation.view.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +19,7 @@ fun Footer() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Divider(color = Color.Gray, thickness = 1.dp) // Separator line
+        HorizontalDivider(thickness = 1.dp, color = Color.Gray) // Separator line
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = "© 2024 Sougna. All Rights Reserved.", fontSize = 14.sp, color = Color.Gray)
     }

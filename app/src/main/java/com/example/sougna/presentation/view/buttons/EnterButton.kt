@@ -26,10 +26,10 @@ fun EnterButton(navController: NavController) {
     ) {
         Button(
             onClick = { navController.navigate("home") },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE63946)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFFFFF)),
             shape = RoundedCornerShape(9.dp)
         ) {
-            Text("Let's Start", color = Color.White)
+            Text("let's start ", color = Color(0xFF6A8DF7)) // درجة أفتح من الأزرق
         }
     }
 }
