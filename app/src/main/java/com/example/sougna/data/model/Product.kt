@@ -24,5 +24,9 @@ data class Product(
     val categoryId: String,
     val thumbnailUrl: String,
     val createdAt: Date = Date(),
-    val updatedAt: Date = Date()
-)
+    val updatedAt: Date = Date(),
+    val rating: Double
+) {
+    val rating = TODO()
+        get() = field
+}

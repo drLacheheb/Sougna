@@ -75,13 +75,14 @@ fun AddProductScreen(
         Button(
             onClick = {
                 val product = Product(
+                    id = UUID.randomUUID().toString(),
                     name = productName,
                     description = productDescription,
                     price = productPrice.toDoubleOrNull() ?: 0.0,
-                    id = UUID.randomUUID().toString(),
                     userId = "1",
                     categoryId = "1",
-                    thumbnailUrl = "https://picsum.photos/id/237/200/300"
+                    thumbnailUrl = "https://picsum.photos/id/237/200/300",
+                    rating = 0.0
                 )
                 productViewModel.addProduct(product)
                 onBackClick()
