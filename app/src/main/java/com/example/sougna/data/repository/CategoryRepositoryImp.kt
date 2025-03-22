@@ -13,19 +13,31 @@ class CategoryRepositoryImp @Inject constructor(): CategoryRepository {
             id = "1",
             name = "Electronics",
             description = "Latest gadgets and devices.",
-            icon = R.drawable.ic_electronics
+            icon = R.drawable.microwave_100px
         ),
         Category(
             id = "2",
-            name = "Fashion",
+            name = "PC",
             description = "Trendy clothing and accessories.",
-            icon = R.drawable.ic_fashion
+            icon = R.drawable.windows_client_100px
         ),
         Category(
             id = "3",
-            name = "Home & Kitchen",
+            name = "Clothes",
             description = "Everything for your home.",
-            icon = R.drawable.ic_home_kitchen
+            icon = R.drawable.clothes_100px
+        ),
+        Category(
+            id = "4",
+            name = "Clothes",
+            description = "Everything for your home.",
+            icon = R.drawable.clothes_100px
+        ),
+        Category(
+            id = "5",
+            name = "Clothes",
+            description = "Everything for your home.",
+            icon = R.drawable.clothes_100px
         )
     )
 

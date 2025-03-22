@@ -30,4 +30,3 @@ fun MainScreen(
 //    val products by productViewModel.products.collectAsState()
 //    val categories by categoryViewModel.categories.collectAsState()
 }
-

@@ -8,7 +8,6 @@ import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -86,25 +85,6 @@ fun SearchBar() {
                         )
                     }
                 }
-            }
-        }
-
-        Spacer(modifier = Modifier.width(10.dp))
-
-        // Settings Button
-        Box(
-            modifier = Modifier
-                .size(50.dp)
-                .shadow(6.dp, shape = RoundedCornerShape(16.dp))
-                .background(Color.White, shape = RoundedCornerShape(16.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            IconButton(onClick = { /* Handle settings action */ }) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
-                    tint = Color.Gray
-                )
             }
         }
     }

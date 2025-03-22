@@ -50,6 +50,8 @@ fun ProfilePage(navController: NavHostController) {
                 ProfileButton(navController = navController)
                 Spacer(modifier = Modifier.width(16.dp)) // Add spacing between buttons
                 AddProductButton(navController = navController)
+                Spacer(modifier = Modifier.width(16.dp)) // Add spacing between buttons
+                UserProductAdded(navController = navController)
             }
         }
 

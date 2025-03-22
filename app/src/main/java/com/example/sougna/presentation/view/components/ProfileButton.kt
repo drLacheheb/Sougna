@@ -17,23 +17,19 @@ import androidx.navigation.NavController
 import com.example.sougna.R
 
 @Composable
-fun ProfileButton(profileImageId: Int?, navController: NavController) {
+fun ProfileButton(navController: NavController, profileImageId: Int?) {
     Box(
         modifier = Modifier
             .size(55.dp)
             .clip(CircleShape)
             .background(Color.White)
             .clickable {
-                navController.navigate("profile") // Navigate to AddProductScreen
+                navController.navigate("profile") // Ensure "profile" is the correct route
             },
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = if (profileImageId != null) {
-                painterResource(id = profileImageId)
-            } else {
-                painterResource(id = R.drawable.default_profile)
-            },
+            painter = painterResource(id = profileImageId ?: R.drawable.default_profile),
             contentDescription = "Profile",
             modifier = Modifier
                 .size(40.dp)
@@ -41,3 +37,4 @@ fun ProfileButton(profileImageId: Int?, navController: NavController) {
         )
     }
 }
+

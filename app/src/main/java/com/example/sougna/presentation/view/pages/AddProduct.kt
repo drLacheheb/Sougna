@@ -1,5 +1,6 @@
 package com.example.sougna.presentation.view.pages
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -8,8 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +24,7 @@ import com.example.sougna.presentation.view.components.CategoryDropdown
 import com.example.sougna.presentation.viewmodel.AddProductEvent
 import com.example.sougna.presentation.viewmodel.AddProductViewModel
 
+@SuppressLint("UseKtx")
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun AddProductScreen(
@@ -41,6 +42,7 @@ fun AddProductScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
+        // 🔴 Header Section
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,17 +53,20 @@ fun AddProductScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp),
-                horizontalArrangement = Arrangement.Center, // Center the buttons
+                    .padding(horizontal = 16.dp), // ✅ Reduced spacing to fit all buttons
+                horizontalArrangement = Arrangement.SpaceEvenly, // ✅ Ensures buttons are evenly spaced
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                ProfileButton(navController = navController)
-                Spacer(modifier = Modifier.width(16.dp)) // Add spacing between buttons
-                AddProductButton(navController = navController)
+                ProfileButton(navController)
+                AddProductButton(navController)
+                //UserProductAdded(navController) // ✅ This should now appear correctly
             }
         }
+
+
         Spacer(modifier = Modifier.height(20.dp))
 
+        // 🔴 Form Inputs Section
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -100,17 +105,20 @@ fun AddProductScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            // 🔴 Image Picker
             ImagePicker(
-                selectedImages = listOf(Uri.parse(state.imageUrl)),
+                selectedImages = listOfNotNull(state.imageUrl?.let { Uri.parse(it) }),
                 onImageClick = { imagePickerLauncher.launch("image/*") }
             )
 
             Spacer(modifier = Modifier.height(35.dp))
+
+            // 🔴 Action Buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                CancelButton(navController = navController)
+                CancelButton(navController)
                 Spacer(modifier = Modifier.width(16.dp))
                 AddButton(
                     onClick = {
@@ -119,17 +127,33 @@ fun AddProductScreen(
                 )
             }
 
+            // 🔴 Loading & Error State
             if (state.isLoading) {
-                Text(text = "Adding product...", modifier = Modifier.padding(16.dp))
+                Text(
+                    text = "Adding product...",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    color = Color.Gray
+                )
             }
 
             state.error?.let {
-                Text(text = "Error: $it", color = colorScheme.error, modifier = Modifier.padding(16.dp))
+                Text(
+                    text = "Error: $it",
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
             }
 
+            // 🔴 Navigate on Success
             if (state.isSuccess) {
                 LaunchedEffect(Unit) {
-                    navController.navigate("home")
+                    navController.navigate("home") {
+                        popUpTo("add_product") { inclusive = true }
+                    }
                 }
             }
         }

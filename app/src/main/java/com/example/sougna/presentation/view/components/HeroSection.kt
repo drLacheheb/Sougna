@@ -6,12 +6,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.sougna.presentation.view.state.CategoryUiState
-import com.example.sougna.presentation.view.state.ProductUiState
-import com.example.sougna.presentation.viewmodel.AddProductViewModel
-import com.example.sougna.presentation.viewmodel.CategoryState
 import com.example.sougna.presentation.viewmodel.CategoryViewModel
 import com.example.sougna.presentation.viewmodel.ProductViewModel
 
@@ -29,10 +26,6 @@ fun HeroSection() {
             .padding(2.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(5.dp))
-
-        CategoriesRow(categoriesState.categories)
-
         Spacer(modifier = Modifier.height(5.dp))
 
         ProductGrid(uiState.products) // ✅ Display products on the homepage
