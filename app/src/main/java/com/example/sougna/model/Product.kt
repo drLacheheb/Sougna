@@ -1,7 +1,5 @@
 package com.example.sougna.model
 
-import java.util.Date
-
 /**
  * Represents a product in the application.
  *
@@ -19,10 +17,14 @@ data class Product(
     val id: String,
     val name: String,
     val description: String,
-    val price: Double,
+    val price: String,
     val userId: String,
     val categoryId: String,
-    val thumbnailUrl: String,
-    val createdAt: Date = Date(),
-    val updatedAt: Date = Date()
+    val thumbnailUrl: String = "",  // Online image (fallback)
+    val imageRes: Int? = null,
+    val apple: String, // Local image (optional)
+    val chat: String, // Local image (optional)
+    val rating: Double = 0.0
 )
+
+

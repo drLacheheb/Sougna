@@ -34,6 +34,8 @@ data class UIState(
 class ProductViewModel() : ViewModel() {
     // Internal mutable state flow for product data
     private val _uiState = MutableStateFlow(UIState())
+    private val _products = MutableStateFlow<List<Product>>(emptyList())
+    val products: StateFlow<List<Product>> = _products
 
     // Public immutable state flow exposed to UI components
     val uiState: StateFlow<UIState> = _uiState.asStateFlow()

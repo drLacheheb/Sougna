@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Compose integration with Activity for setting up Compose UI in Activities
     implementation(libs.androidx.activity.compose)
+    implementation("com.google.accompanist:accompanist-pager:0.32.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.32.0")
+
+
     // Coil image loading library for Compose to load and display images efficiently
     implementation(libs.io.coil.kt.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -56,6 +60,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

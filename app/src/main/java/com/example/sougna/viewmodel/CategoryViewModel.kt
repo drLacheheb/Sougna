@@ -29,6 +29,8 @@ data class CategoryState(
 class CategoryViewModel : ViewModel() {
     // Internal mutable state flow for category data
     private val _categoryState = MutableStateFlow(CategoryState())
+    private val _categories = MutableStateFlow<List<Category>>(emptyList())
+    val categories: StateFlow<List<Category>> = _categories
 
     // Public immutable state flow exposed to UI components
     val categoryState: StateFlow<CategoryState> = _categoryState.asStateFlow()
