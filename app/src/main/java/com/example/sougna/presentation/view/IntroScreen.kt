@@ -11,10 +11,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.sougna.presentation.view.buttons.EnterButton
-import com.example.sougna.presentation.view.buttons.FirstPaginition
+import com.example.sougna.presentation.view.buttons.FirstPage.EnterButton
+import com.example.sougna.presentation.view.buttons.FirstPage.FirstPaginition
 import com.example.sougna.presentation.view.pages.IntroPage
-import com.example.sougna.presentation.view.buttons.NextButton
+import com.example.sougna.presentation.view.buttons.FirstPage.NextButton
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

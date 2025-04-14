@@ -13,8 +13,6 @@ import javax.inject.Inject
 
 /**
  * Data class representing the state of categories in the application.
- *
- * @property categories List of currently loaded categories
  */
 data class CategoryState(
     val categories: List<Category> = emptyList()
@@ -22,15 +20,12 @@ data class CategoryState(
 
 /**
  * ViewModel responsible for managing category-related data and state.
- *
- * This ViewModel:
- * - Holds and exposes the current state of categories
- * - Provides methods to fetch and update category data
- * - Uses StateFlow for observable state management
  */
-
 @HiltViewModel
-class CategoryViewModel @Inject constructor(private val getAllCategoriesUseCase: GetAllCategoriesUseCase) : ViewModel() {
+class CategoryViewModel @Inject constructor(
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase
+) : ViewModel() {
+
     // Internal mutable state flow for category data
     private val _categoryState = MutableStateFlow(CategoryState())
 
@@ -38,13 +33,11 @@ class CategoryViewModel @Inject constructor(private val getAllCategoriesUseCase:
     val categoryState: StateFlow<CategoryState> = _categoryState.asStateFlow()
 
     init {
-        // Fetch categories when ViewModel is initialized
-        fetchCategories()
+        fetchCategories() // ✅ Fetch categories on ViewModel initialization
     }
 
     /**
      * Fetches categories and updates the state.
-     * Uses mock data from MockCategoryRegistry for demonstration.
      */
     private fun fetchCategories() {
         viewModelScope.launch {

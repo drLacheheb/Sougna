@@ -13,30 +13,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sougna.R
 
 @Composable
-fun ProfileButton(profileImageId: Int?) {
+fun ProfileButton(navController: NavController, profileImageId: Int?) {
     Box(
         modifier = Modifier
-            .size(55.dp) // Circle size increased for better spacing
+            .size(55.dp)
             .clip(CircleShape)
-            .background(Color.hsl(0f, 0f, 1f)) // White background
+            .background(Color.White)
             .clickable {
-                // Handle profile click (optional)
+                navController.navigate("profile") // Ensure "profile" is the correct route
             },
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = if (profileImageId != null) {
-                painterResource(id = profileImageId) // Load profile image if available
-            } else {
-                painterResource(id = R.drawable.default_profile) // Default image if no profile image
-            },
+            painter = painterResource(id = profileImageId ?: R.drawable.default_profile),
             contentDescription = "Profile",
             modifier = Modifier
-                .size(40.dp) // Size of the image
-                .clip(CircleShape) // Clip the image into a circle
+                .size(40.dp)
+                .clip(CircleShape)
         )
     }
 }
+

@@ -27,14 +27,12 @@ import com.example.sougna.data.model.Product
 
 @Composable
 fun ProductGrid(products: List<Product>) {
-
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2), // Two columns
+        columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.padding(16.dp)
     ) {
-
         items(products) { product ->
             ProductCard(product)
         }
@@ -48,24 +46,23 @@ fun ProductCard(product: Product) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { /* Handle click */ }
-            .shadow(8.dp, shape = RoundedCornerShape(12.dp)), // Added shadow here
+            .shadow(8.dp, shape = RoundedCornerShape(12.dp)), // Added shadow
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp) // Added elevation
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(
             modifier = Modifier.padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-                Image(
-                    painter = rememberAsyncImagePainter(product.thumbnailUrl),
-                    contentDescription = "Product Image",
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Crop
-                )
-
+            // Product Image
+            Image(
+                painter = rememberAsyncImagePainter(product.thumbnailUrl),
+                contentDescription = "Product Image",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
 
             // Product Name
             Text(
@@ -82,8 +79,9 @@ fun ProductCard(product: Product) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween // Proper spacing
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                // Product Price
                 Text(
                     text = "${product.price} DA",
                     fontSize = 14.sp,
@@ -91,14 +89,14 @@ fun ProductCard(product: Product) {
                     fontWeight = FontWeight.Bold
                 )
 
-                Row {
+                // Product Rating
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Filled.Star,
                         contentDescription = "Rating",
-                        tint = Color.Yellow, // Changed to Gray
+                        tint = Color.Yellow,
                         modifier = Modifier.size(16.dp)
                     )
-
                     Text(
                         text = product.rating.toString(),
                         fontSize = 14.sp,
@@ -108,58 +106,36 @@ fun ProductCard(product: Product) {
                 }
             }
 
-            // **Line Divider**
+            // Divider Line
             Divider(
                 modifier = Modifier.padding(top = 6.dp),
                 thickness = 1.dp,
-                color = Color.Gray.copy(alpha = 0.5f) // Light gray color
+                color = Color.Gray.copy(alpha = 0.5f)
             )
 
-            // Apple & Chat Section
+            // Contact Icons Section
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
+                    .padding(top = 6.dp, bottom = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Apple Section
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.phone),
-                        contentDescription = "Apple",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(16.dp)
-                    )
+                // Phone Icon
+                Icon(
+                    painter = painterResource(id = R.drawable.phone),
+                    contentDescription = "Phone Contact",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(20.dp)
+                )
 
-//                    Text(
-//                        text = product.apple.toString(), // Ensure it's a String
-//                        fontSize = 14.sp,
-//                        color = Color.Black,
-//                        modifier = Modifier.padding(start = 4.dp)
-//                    )
-                }
-
-                // Chat Section
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.chat),
-                        contentDescription = "Chat",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(16.dp)
-                    )
-
-//                    Text(
-//                        text = product.chat.toString(), // Ensure it's a String
-//                        fontSize = 14.sp,
-//                        color = Color.Black,
-//                        modifier = Modifier.padding(start = 4.dp)
-//                    )
-                }
+                // Chat Icon
+                Icon(
+                    painter = painterResource(id = R.drawable.chat),
+                    contentDescription = "Chat Contact",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(20.dp)
+                )
             }
         }
     }

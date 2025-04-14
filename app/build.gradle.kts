@@ -54,6 +54,16 @@ dependencies {
     // Compose integration with Activity for setting up Compose UI in Activities
     implementation(libs.androidx.activity.compose)
 
+    implementation("androidx.compose.ui:ui:1.5.0")
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.compose.material:material-icons-extended:1.5.0")
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+
+
 
     // Coil image loading library for Compose to load and display images efficiently
     implementation(libs.io.coil.kt.compose)

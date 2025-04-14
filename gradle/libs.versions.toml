@@ -11,12 +11,14 @@ composeBom = "2024.04.01"
 hiltVersion = "2.51.1"
 hiltNavigation = "1.2.0"
 kaptVersion = "2.1.10"
+material3 = "1.3.1"
 navigatinCompose = "2.8.7"
 gms = "4.4.2"
 firebase = "33.9.0"
 firestore = "25.1.2"
 auth = "23.2.0"
 analytics  = "22.2.0"
+ui = "1.7.8"
 
 
 [libraries]
@@ -48,6 +50,8 @@ google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", ve
 google-firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" ,version.ref = "analytics"}
 google-firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" , version.ref="auth"}
 google-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firestore" }
+material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

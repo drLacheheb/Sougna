@@ -10,9 +10,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.ui.draw.clip
@@ -27,20 +29,16 @@ import com.example.sougna.data.model.Category
 
 @Composable
 fun CategoriesRow(categories: List<Category>) {
-
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+    LazyRow(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier
-            .padding(1.dp)
+        modifier = Modifier.padding(4.dp)
     ) {
-
         items(categories) { category ->
             CategoryCard(category)
         }
     }
 }
+
 
 @Composable
 fun CategoryCard(category: Category) {
