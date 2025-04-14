@@ -52,7 +52,7 @@ In this part, you will implement the remaining CRUD operations and search functi
    - Create advanced search UI
    - Implement filter logic in ViewModel
    - Add sorting options
-3. Polish User Experience
+3. User Experience
    
    - Add loading indicators
    - Implement error handling with user-friendly messages
