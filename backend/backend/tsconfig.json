@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+	  "target": "ES2020",
+	  "module": "NodeNext",
+	  "moduleResolution": "NodeNext",
+	  "outDir": "./src",
+	  "rootDir": "./",
+	  "strict": true,
+	  "esModuleInterop": true,
+	  "skipLibCheck": true,
+	  "types": ["node"] // Explicitly include Node.js types
+	},
+	"ts-node": {
+	  "esm": true,
+	  "experimentalSpecifierResolution": "node" // Required for ESM
+	},
+	"include": ["backend/src/**/*"],
+	"exclude": ["node_modules", "**/*.spec.ts", "frontend"]
+  }
